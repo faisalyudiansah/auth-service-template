@@ -1,2 +1,3 @@
 # auth-service-template
-Auth Service Template
+
+Auth Service Template with DDD (Domain-Driven Design)
