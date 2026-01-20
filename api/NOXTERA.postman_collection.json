@@ -1,0 +1,552 @@
+{
+  "info": {
+    "_postman_id": "dbaf0e53-b21d-4c64-a9e8-9181385f6691",
+    "name": "authservice",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29632965",
+    "_collection_link": "https://go.postman.co/collection/29632965-dbaf0e53-b21d-4c64-a9e8-9181385f6691?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Profile",
+          "item": [
+            {
+              "name": "Get Me",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/user/me",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "user",
+                    "me"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List User With Detail",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}"
+                },
+                "url": {
+                  "raw": "{{local}}/user?limit=10&page=1&filters=W3siZmllbGQiOiJlbWFpbCIsIm9wZXJhdG9yIjoiaWxpa2UiLCJ2YWx1ZSI6Im11YW1hciJ9XQ==&sort=W3siZmllbGQiOiJjcmVhdGVkX2F0IiwiZGlyZWN0aW9uIjoiYXNjIn1d",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "user"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "W3siZmllbGQiOiJlbWFpbCIsIm9wZXJhdG9yIjoiaWxpa2UiLCJ2YWx1ZSI6Im11YW1hciJ9XQ==",
+                      "type": "text"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "W3siZmllbGQiOiJjcmVhdGVkX2F0IiwiZGlyZWN0aW9uIjoiYXNjIn1d"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/user/:user_id",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "user",
+                    ":user_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "user_id",
+                      "value": "3700f848-d6af-47a8-8261-d0c69854eb09"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": 1,\n  \"is_verified\": true,\n  \"is_active\": true,\n  \"full_name\": \"Cristiano Ronaldo\",\n  \"sex\": 1,\n  \"phone_number\": \"+62851561231125\",\n  \"image_url\": \"https://example.com/images/profile.jpg\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/user/:user_id",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "user",
+                    ":user_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "user_id",
+                      "value": "a630e974-8b89-403f-991f-068de3d0127d"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"deleted_reason\": \"delete aja\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/user/:user_id",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "user",
+                    ":user_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "user_id",
+                      "value": "17f3a779-8a21-4083-ba13-d639bdc0ba14"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "Login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}\n// {\n//     \"email\": \"new.user@gmail.com\",\n//     \"password\": \"ni4fni4f4in@LL\"\n// }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/login",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"new.user@gmail.com\",\n    \"password\": \"ni4fni4f4in@LL\",\n    \"full_name\": \"new user\",\n    \"sex\": 1,\n    \"birth_date\": \"1998-05-29\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/register",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register From Admin",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"new.admin@gmail.com\",\n    \"password\": \"12345aa3@@!@aaA\",\n    \"full_name\": \"new admin\",\n    \"sex\": 1,\n    \"role\": 1,\n    \"birth_date\": \"2000-01-25\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/register/from-admin",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register",
+                    "from-admin"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Logout",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/auth/logout",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Refresh Token",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/auth/refresh",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Forgot Password",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"new.user@gmail.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/forgot-password",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Reset Password",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"reset_token\": \"OGVmZDFkOTgtN2RhOS00NmRiLWExM2ItNjdhZWVlMDBlMDYz\",\n    \"email\": \"bmV3LnVzZXJAZ21haWwuY29t\",\n    \"password\": \"ni4fni4f4in@LL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/reset-password",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "reset-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Account",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"verification_token\": \"YTM1NWI4Y2QtNjBmYy00ZDEyLTkzMjktNzI4MDE3ZTMzOTNh\",\n    \"email\": \"bmV3LnVzZXJAZ21haWwuY29t\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/verify-account",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "verify-account"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Send Verivication",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"new.user@gmail.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/auth/send-verification",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "send-verification"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No Route",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}"
+        },
+        "url": {
+          "raw": "{{local}}/wrong-route",
+          "host": [
+            "{{local}}"
+          ],
+          "path": [
+            "wrong-route"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "",
+              "value": "",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Main",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}"
+        },
+        "url": {
+          "raw": "{{local}}",
+          "host": [
+            "{{local}}"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "",
+              "value": "",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Health",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}"
+        },
+        "url": {
+          "raw": "{{local}}/health",
+          "host": [
+            "{{local}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Metrics",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"faisal@authservice.com\",\n    \"password\": \"12345\"\n}"
+        },
+        "url": {
+          "raw": "{{local}}/metrics",
+          "host": [
+            "{{local}}"
+          ],
+          "path": [
+            "metrics"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "local",
+      "value": ""
+    }
+  ]
+}

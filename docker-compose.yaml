@@ -1,0 +1,136 @@
+version: "3.9"
+
+services:
+  web-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    labels:
+      - logging=promtail
+    restart: always
+    depends_on:
+      redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - production
+
+  redis:
+    image: redis:7.4-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - production
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - production
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter
+    ports:
+      - 9187:9187
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@db:5432/api_db?sslmode=disable"
+    networks:
+      - production
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs"
+      - "/var/run:/var/run"
+      - "/sys:/sys"
+      - "/var/lib/docker/:/var/lib/docker"
+      - "/dev/disk/:/dev/disk"
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+    networks:
+      - production
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - DS_PROMETHEUS=prometheus
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:587
+      - GF_SMTP_USER=email
+      - GF_SMTP_PASSWORD=password
+    volumes:
+      - "grafana-data:/var/lib/grafana"
+      - "./configs/grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
+      - "./configs/grafana/dashboard.json:/var/lib/grafana/dashboards/dashboard.json"
+      - "./configs/grafana/default.yaml:/etc/grafana/provisioning/dashboards/default.yaml"
+    privileged: true
+    depends_on:
+      - prometheus
+    networks:
+      - production
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - "./configs/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
+    privileged: true
+    depends_on:
+      - cadvisor
+    networks:
+      - production
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - 3100:3100
+    volumes:
+      - "loki-data:/mnt/config"
+      - "./configs/loki/loki-config.yaml:/mnt/config/loki-config.yaml"
+    command: -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - production
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - "promtail-data:/etc/promtail"
+      - "./configs/promtail/promtail-config.yaml:/mnt/config/promtail-config.yaml"
+      - "/var/log:/var/log"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - loki
+    command: -config.file=/mnt/config/promtail-config.yaml
+    networks:
+      - production
+
+volumes:
+  grafana-data:
+    driver: local
+  promtail-data:
+    driver: local
+  loki-data:
+    driver: local
+
+networks:
+  production:
+    driver: bridge

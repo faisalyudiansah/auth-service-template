@@ -1,0 +1,3 @@
+id,role,email,hash_password,is_verified,is_oauth,is_active,created_at,created_by,updated_at,updated_by,deleted_by,deleted_reason
+42a20eb0-bf0a-4be8-b5c9-ead210df6ba5,1,faisal@authservice.com,$2a$10$F7776XXzTNUKEC5cYTn9A.OsJpdIZ/le/M/SOpRMTuD1TChIlnhim,t,f,t,2025-12-16 15:56:00.026149+0700,42a20eb0-bf0a-4be8-b5c9-ead210df6ba5,,,,,
+3700f848-d6af-47a8-8261-d0c69854eb09,1,muamar@authservice.com,$2a$10$F7776XXzTNUKEC5cYTn9A.OsJpdIZ/le/M/SOpRMTuD1TChIlnhim,t,f,t,2025-12-16 15:56:00.026149+0700,3700f848-d6af-47a8-8261-d0c69854eb09,,,,,
