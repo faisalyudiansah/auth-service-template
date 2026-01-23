@@ -25,5 +25,5 @@ type DeleteUser struct {
 	UserID        uuid.UUID `json:"user_id"`
 	DeletedReason string    `json:"deleted_reason" binding:"required"`
 
-	UpdatedBy uuid.UUID `json:"-"`
+	DeletedBy uuid.UUID `json:"-"`
 }

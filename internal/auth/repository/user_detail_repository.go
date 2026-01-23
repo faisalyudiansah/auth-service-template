@@ -123,9 +123,7 @@ func (r *userDetailRepositoryImpl) Update(ctx context.Context, userDetail *entit
 			sex = $2,
 			phone_number = $3,
 			image_url = $4,
-			birth_date = $5,
-			updated_at = NOW(),
-			updated_by = $6
+			birth_date = $5
 	`
 
 	args := []any{
@@ -134,10 +132,17 @@ func (r *userDetailRepositoryImpl) Update(ctx context.Context, userDetail *entit
 		userDetail.PhoneNumber,
 		userDetail.ImageURL,
 		userDetail.BirthDate,
-		userDetail.UpdatedBy,
 	}
 
-	argIdx := 7
+	argIdx := 6
+
+	if userDetail.UpdatedBy != nil && userDetail.DeletedBy == nil {
+		query += `
+			, updated_at = NOW()
+			, updated_by = $` + strconv.Itoa(argIdx)
+		args = append(args, *userDetail.UpdatedBy)
+		argIdx++
+	}
 
 	if userDetail.DeletedBy != nil {
 		query += `

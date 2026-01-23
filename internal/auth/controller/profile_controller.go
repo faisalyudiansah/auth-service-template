@@ -148,7 +148,7 @@ func (c *ProfileController) DeleteUser(ctx *gin.Context) {
 	}
 
 	req.UserID = userID
-	req.UpdatedBy = utils.GetValueUserIDFromContext(ctx)
+	req.DeletedBy = utils.GetValueUserIDFromContext(ctx)
 
 	logstash.LogstashRequestInfo(ctx, req, fmt.Sprintf("%v - REQUEST : %v", modulName, req.UserID))
 	err = c.profileUsecase.DeleteUser(ctx, req)

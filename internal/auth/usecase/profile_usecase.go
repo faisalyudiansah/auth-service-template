@@ -203,16 +203,14 @@ func (u *profileUsecaseImpl) DeleteUser(ctx context.Context, req *dto_request.De
 			return err
 		}
 
-		if recordUserDB.Role.IsRoleAdmin() || recordUserDB.ID == req.UpdatedBy {
+		if recordUserDB.Role.IsRoleAdmin() && recordUserDB.ID == req.DeletedBy {
 			return apperrorPkg.NewDontHavePermissionErrorMessageError()
 		}
 
-		recordUserDB.UpdatedBy = &req.UpdatedBy
-		recordUserDB.DeletedBy = &req.UpdatedBy
+		recordUserDB.DeletedBy = &req.DeletedBy
 		recordUserDB.DeletedReason = &req.DeletedReason
 
-		recordUserDetailDB.UpdatedBy = &req.UpdatedBy
-		recordUserDetailDB.DeletedBy = &req.UpdatedBy
+		recordUserDetailDB.DeletedBy = &req.DeletedBy
 		recordUserDetailDB.DeletedReason = &req.DeletedReason
 
 		if err := u.userRepo.Update(cForTx, recordUserDB); err != nil {

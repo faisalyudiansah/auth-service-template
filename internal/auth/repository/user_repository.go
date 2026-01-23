@@ -397,19 +397,24 @@ func (r *userRepositoryImpl) Update(ctx context.Context, user *entity.User) erro
 		SET
 			role = $1,
 			is_verified = $2,
-			is_active = $3,
-			updated_at = NOW(),
-			updated_by = $4
+			is_active = $3
 	`
 
 	args := []any{
 		user.Role,
 		user.IsVerified,
 		user.IsActive,
-		user.UpdatedBy,
 	}
 
-	argIdx := 5
+	argIdx := 4
+
+	if user.UpdatedBy != nil && user.DeletedBy == nil {
+		query += `
+			, updated_at = NOW()
+			, updated_by = $` + strconv.Itoa(argIdx)
+		args = append(args, *user.UpdatedBy)
+		argIdx++
+	}
 
 	if user.DeletedBy != nil {
 		query += `
