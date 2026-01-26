@@ -158,7 +158,7 @@ func (u *profileUsecaseImpl) UpdateUser(ctx context.Context, req *dto_request.Up
 		}
 
 		if req.RoleWhoIsEdit.IsRoleAdmin() {
-			recordUserDB.Role = custom_type.Role(req.Role)
+			recordUserDB.Role = custom_type.Role(*req.Role)
 			recordUserDB.IsVerified = req.IsVerified
 			recordUserDB.IsActive = req.IsActive
 			recordUserDB.UpdatedBy = &req.UpdatedBy
@@ -169,7 +169,7 @@ func (u *profileUsecaseImpl) UpdateUser(ctx context.Context, req *dto_request.Up
 		}
 
 		recordUserDetailDB.FullName = req.FullName
-		recordUserDetailDB.Sex = custom_type.Sex(req.Sex)
+		recordUserDetailDB.Sex = custom_type.Sex(*req.Sex)
 		recordUserDetailDB.PhoneNumber = &req.PhoneNumber
 		recordUserDetailDB.ImageURL = req.ImageURL
 		recordUserDetailDB.UpdatedBy = &req.UpdatedBy

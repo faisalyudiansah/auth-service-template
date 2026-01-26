@@ -222,7 +222,7 @@ func (u *authUsecaseImpl) Register(ctx context.Context, req *dto_request.Registe
 		user.CreatedBy = user.ID
 
 		if req.CreatedBy != nil { // admin create user
-			user.Role = req.Role
+			user.Role = *req.Role
 			user.IsVerified = true
 			user.CreatedBy = *req.CreatedBy
 		}
@@ -230,7 +230,7 @@ func (u *authUsecaseImpl) Register(ctx context.Context, req *dto_request.Registe
 		userDetail := new(entity.UserDetail)
 		userDetail.UserID = user.ID
 		userDetail.FullName = req.FullName
-		userDetail.Sex = req.Sex
+		userDetail.Sex = *req.Sex
 		userDetail.BirthDate = req.BirthDate
 		userDetail.CreatedBy = user.CreatedBy
 

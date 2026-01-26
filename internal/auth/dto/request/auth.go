@@ -16,8 +16,8 @@ type Register struct {
 	Email     string                  `json:"email" binding:"required,email"`
 	Password  string                  `json:"password" binding:"required,password"`
 	FullName  string                  `json:"full_name" binding:"required"`
-	Sex       custom_typeAuth.Sex     `json:"sex" binding:"required,oneof=0 1 2"`
-	Role      custom_typeAuth.Role    `json:"role" binding:"oneof=0 1 2"`
+	Sex       *custom_typeAuth.Sex    `json:"sex" binding:"required,oneof=0 1 2"`
+	Role      *custom_typeAuth.Role   `json:"role" binding:"oneof=0 1 2"`
 	BirthDate custom_typePkg.DateOnly `json:"birth_date" binding:"required,birth_date"`
 
 	CreatedBy *uuid.UUID `json:"-"`
