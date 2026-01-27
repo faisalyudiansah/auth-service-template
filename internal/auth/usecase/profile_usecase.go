@@ -6,7 +6,6 @@ import (
 	apperrorAuth "github.com/faisalyudiansah/auth-service-template/internal/auth/apperror"
 	dto_request "github.com/faisalyudiansah/auth-service-template/internal/auth/dto/request"
 	"github.com/faisalyudiansah/auth-service-template/internal/auth/entity"
-	custom_type "github.com/faisalyudiansah/auth-service-template/internal/auth/entity/type"
 	"github.com/faisalyudiansah/auth-service-template/internal/auth/repository"
 	apperrorPkg "github.com/faisalyudiansah/auth-service-template/pkg/apperror"
 	"github.com/faisalyudiansah/auth-service-template/pkg/database/transactor"
@@ -158,7 +157,7 @@ func (u *profileUsecaseImpl) UpdateUser(ctx context.Context, req *dto_request.Up
 		}
 
 		if req.RoleWhoIsEdit.IsRoleAdmin() {
-			recordUserDB.Role = custom_type.Role(*req.Role)
+			recordUserDB.Role = *req.Role
 			recordUserDB.IsVerified = req.IsVerified
 			recordUserDB.IsActive = req.IsActive
 			recordUserDB.UpdatedBy = &req.UpdatedBy
@@ -169,7 +168,7 @@ func (u *profileUsecaseImpl) UpdateUser(ctx context.Context, req *dto_request.Up
 		}
 
 		recordUserDetailDB.FullName = req.FullName
-		recordUserDetailDB.Sex = custom_type.Sex(*req.Sex)
+		recordUserDetailDB.Sex = *req.Sex
 		recordUserDetailDB.PhoneNumber = &req.PhoneNumber
 		recordUserDetailDB.ImageURL = req.ImageURL
 		recordUserDetailDB.UpdatedBy = &req.UpdatedBy
